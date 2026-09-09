@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-ICT Technical Assistance Form (Network)</title>
+
+  <style>
+    * { box-sizing: border-box; font-family: "Bookman Old Style", Georgia, serif; }
+    body { background-color: #f4f6f9; margin: 0; padding: 15px; }
+    .form-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border: 1px solid #dcdcdc;
+    }
+    .h2-title { text-align: center; color: black; margin-top: 2px; margin-bottom: 1px; font-size: 15px; text-transform: uppercase; letter-spacing: 0.5px; padding-bottom: 1px; }
+    
+    .section-header {
+      background-color: #B7B7B7;
+      color: white;
+      padding: 6px 12px;
+      font-weight: bold;
+      font-size: 14px;
+      margin-top: 20px;
+      margin-bottom: 15px;
+      border-radius: 4px;
+    }
+
+    .grid-row { display: flex; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
+    .col { flex: 1; min-width: 200px; }
+    
+    label { display: block; font-size: 12px; font-weight: bold; color: #4a5568; margin-bottom: 4px; }
+    input[type="text"], input[type="date"], input[type="time"], select, textarea {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #cbd5e0;
+      border-radius: 4px;
+      font-size: 13px;
+      outline: none;
+    }
+    input:focus, textarea:focus, select:focus { border-color: #3182ce; box-shadow: 0 0 0 1px #3182ce; }
+    textarea { resize: vertical; min-height: 60px; }
+
+    .inline-options { display: flex; gap: 15px; align-items: center; margin-top: 6px; }
+    .inline-options label { font-weight: normal; margin-bottom: 0; cursor: pointer; }
+
+    /* Canvas / Signature Styling */
+    .sig-block { text-align: center; }
+    canvas {
+      border: 2px dashed #cbd5e0;
+      border-radius: 4px;
+      background: #fafafa;
+      cursor: crosshair;
+      touch-action: none;
+      width: 100%;
+      max-width: 320px;
+      height: 110px;
+    }
+    .clear-btn {
+      background: #e2e8f0;
+      border: none;
+      padding: 4px 10px;
+      font-size: 11px;
+      border-radius: 3px;
+      cursor: pointer;
+      margin-top: 4px;
+      color: #4a5568;
+    }
+    .clear-btn:hover { background: #cbd5e0; }
+
+    /* Feedback Radio Group */
+    .rating-group {
+      display: flex;
+      justify-content: space-around;
+      background: #f7fafc;
+      padding: 12px;
+      border: 1px solid #e2e8f0;
+      border-radius: 4px;
+    }
+    .rating-option { text-align: center; font-size: 13px; font-weight: bold; color: #2d3748; cursor: pointer; }
+    .rating-option input { margin-bottom: 4px; display: block; margin-left: auto; margin-right: auto; }
+
+    .speed-note {
+      font-size: 11px;
+      color: #718096;
+      margin-bottom: 6px;
+      font-style: italic;
+    }
+    .speed-note a { color: #3182ce; text-decoration: none; font-weight: bold; }
+    .speed-note a:hover { text-decoration: underline; }
+
+    /* Single Action Button Styling */
+    .btn-group-action {
+      display: flex;
+      gap: 12px;
+      margin-top: 25px;
+      padding-bottom: 4px;
+    }
+    .submit-btn {
+      flex: 1;
+      background-color: #2b6cb0;
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 15px;
+      font-weight: bold;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .submit-btn:hover { background-color: #2c5282; }
+
+    .img-logo {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 12%;
+    }
+    .deped-header {
+      font-family: 'Old English Text MT', serif;
+      font-size: 20px;
+      text-align: center;
+      margin-top: 0; margin-bottom: 0.5px;
+    } 
+
+    .print-table { width: 100%; border-collapse: collapse; }
+    .print-table td, .print-table th { border: none; padding: 0; }
+
+    /* Print styles */
+    @media print {
+      @page {
+        size: A4;
+        margin: 0.5in;
+      }
+      
+      body {
+        background-color: #ffffff;
+        padding: 0;
+      }
+
+      .form-container {
+        box-shadow: none !important;
+        border: none !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+      }
+
+      thead {
+        display: table-header-group;
+      }
+
+      tfoot {
+        display: table-footer-group;
+      }
+
+      tr {
+        page-break-inside: avoid;
+      }
+
+      .submit-btn, .clear-btn {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="form-container">
+  <table class="print-table">
+    <thead>
+      <tr>
+        <td>
+          <header>
+            <img class="img-logo" src="https://drive.google.com/thumbnail?id=1K6y7gxZytn4Yaukpc7-hukRIrCtkHpSm&sz=w1000" alt="DepEd Logo">
+            <h2 class="deped-header">Republic of the Philippines</h2>
+            <h2 class="deped-header" style="font-size: 20px;">Department of Education</h2>
+            <h2 style="font-size: 15px; font-family: Bookman Old Style,serif;letter-spacing: 1.5px;text-align: center; margin-top: 0; margin-bottom: 2px; border-bottom: 4px solid">REGION X - NORTHERN MINDANAO</h2>
+          </header>
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <h2 class="h2-title">Electronic- ICT Technical Assistance Form </h2>
+          <h2 class="h2-title" style="text-align: center;">(Network)</h2>
+
+          <form id="networkForm">
+            
+            <!-- SECTION I -->
+            <div class="section-header">I. GENERAL INFORMATION</div>
+            
+            <div class="grid-row">
+              <div class="col"><label>Control Number (Auto)</label><input type="text" id="controlNo" readonly placeholder="Generating..."></div>
+              <div class="col"><label>Date (Auto)</label><input type="date" id="reqDate" required readonly></div>
+              <div class="col"><label>Time (Auto)</label><input type="time" id="reqTime" required readonly></div>
+            </div>
+
+            <div class="grid-row">
+              <div class="col" style="flex: 2;">
+                <div style="margin-bottom: 10px;">
+                  <label>Requested by (Name)</label>
+                  <input type="text" id="reqName" placeholder="Full Name" required>
+                </div>
+                <div style="margin-bottom: 10px;">
+                  <label>Designation</label>
+                  <input type="text" id="designation" placeholder="e.g. Teacher I / Admin Assistant">
+                </div>
+                <div>
+                  <label>Division / Office</label>
+                  <select id="division" required>
+                    <option value="">-- Select Office / Unit --</option>
+                    <option value="Office of the Regional Director">Office of the Regional Director</option>
+                    <option value="Office of the Assistant Regional Director">Office of the Assistant Regional Director</option>
+                    <option value="Accounting Unit">Accounting Unit</option>
+                    <option value="Budget Section">Budget Section</option>
+                    <option value="PAU">PAU</option>
+                    <option value="ICTU">ICTU</option>
+                    <option value="ESSD">ESSD</option>
+                    <option value="Legal Unit">Legal Unit</option>
+                    <option value="FTAD">FTAD</option>
+                    <option value="COA">COA</option>
+                    <option value="Personnel Section">Personnel Section</option>
+                    <option value="QAD">Quality Assurance Division</option>
+                    <option value="CLMD">CLMD</option>
+                    <option value="PPRD">PPRD</option>
+                    <option value="ADMIN DIVISION">Administrative Division</option>
+                    <option value="Procurement Unit">Procurement Unit</option>
+                    <option value="General Services">General Services</option>
+                    <option value="Records Section">Records Section</option>
+                    <option value="Asset Supply Management">Asset Supply Management</option>
+                    <option value="Cashier Section">Cash Section</option>
+                    <option value="LR">LR</option>
+                    <option value="HRDD">HRDD</option>
+                    <option value="HNU">Health and Nutrition Unit</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col sig-block" style="flex: 1;">
+                <label>Signature of Requestor</label>
+                <canvas id="sigCanvas"></canvas>
+                <div><button type="button" class="clear-btn" onclick="clearSignature()">Clear Signature</button></div>
+              </div>
+            </div>
+
+            <!-- SECTION II -->
+            <div class="section-header">II. NETWORK CONNECTION DETAILS</div>
+            
+            <div class="grid-row">
+              <div class="col">
+                <label>Connection Type:</label>
+                <div class="inline-options">
+                  <label><input type="radio" name="connectionType" value="Wired"> Wired (LAN Cable)</label>
+                  <label><input type="radio" name="connectionType" value="Wi-Fi"> Wi-Fi</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="speed-note">
+              * Visit <a href="https://www.fast.com" target="_blank" rel="noopener noreferrer">www.fast.com</a> to test your current connection speed.
+            </div>
+
+            <div class="grid-row">
+              <div class="col"><label>Upload Speed (Mbps)</label><input type="text" id="uploadSpeed" placeholder="e.g. 15 Mbps"></div>
+              <div class="col"><label>Download Speed (Mbps)</label><input type="text" id="downloadSpeed" placeholder="e.g. 50 Mbps"></div>
+            </div>
+
+            <div class="grid-row" style="margin-top: 6px;">
+              <div class="col">
+                <label>Frequency of Disconnection / Day:</label>
+                <div class="inline-options" style="flex-wrap: wrap;">
+                  <label><input type="radio" name="disconnectionFreq" value="Always"> Always</label>
+                  <label><input type="radio" name="disconnectionFreq" value="Very Often"> Very Often</label>
+                  <label><input type="radio" name="disconnectionFreq" value="Sometimes"> Sometimes</label>
+                  <label><input type="radio" name="disconnectionFreq" value="Rarely"> Rarely</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid-row" style="margin-top: 10px;">
+              <div class="col"><label>Date of Last Stable Connection</label><input type="date" id="lastStableDate"></div>
+            </div>
+
+            <div class="grid-row">
+              <div class="col">
+                <label>Defects / Complaints</label>
+                <textarea id="defects" placeholder="Describe the network/internet issue in detail..."></textarea>
+              </div>
+            </div>
+
+            <!-- SECTION III -->
+            <div class="section-header">III. INSPECTION & ACTION TAKEN (ICT UNIT)</div>
+            
+            <div class="grid-row">
+              <div class="col"><label>Date Inspected (Auto)</label><input type="date" id="dateInspected" readonly></div>
+              <div class="col"><label>Time Inspected (Auto)</label><input type="time" id="timeInspected" readonly></div>
+            </div>
+
+            <div class="grid-row">
+              <div class="col">
+                <label>Identified Problem / Issues</label>
+                <textarea id="identifiedProblem"></textarea>
+              </div>
+            </div>
+
+            <div class="grid-row">
+              <div class="col">
+                <label>Description of Technical Support</label>
+                <textarea id="techSupportDesc"></textarea>
+              </div>
+            </div>
+
+            <div class="grid-row">
+              <div class="col">
+                <label>Recommendation/s</label>
+                <textarea id="recommendations"></textarea>
+              </div>
+            </div>
+
+            <!-- SECTION IV -->
+            <div class="section-header">IV. ASSISTED BY & FEEDBACK</div>
+
+            <div class="grid-row">
+              <div class="col sig-block" >
+                
+
+                <!-- 1. Signature Pad Top -->
+        
+                <!-- 2. Full Name / Select Field Middle -->
+                <div style="margin-top: 6px; margin-bottom: 6px;">
+                  <select id="assistedBy" required>
+                     <label>Assisted By (ICT Personnel)</label>
+                    <option value="">-- Select Personnel --</option>
+                    <option value="CLAUDINE RAE G. YAMIS">CLAUDINE RAE G. YAMIS (Computer Maintenance Technologist I)</option>
+                    <option value="DENNIS CARL P. FUENTES">DENNIS CARL P. FUENTES (Computer Programmer II)</option>
+                    <option value="DR. RENEL JAY QUIRIT, CESE">DR. RENEL JAY QUIRIT, CESE (IT Officer I)</option>
+                  </select>
+                </div>
+
+                <!-- 3. Clear Signature Button Bottom -->
+                
+              </div>
+            </div>
+
+            <div style="margin-top: 15px;">
+              <label style="margin-bottom: 8px;">We want your feedback:</label>
+              <div class="rating-group">
+                <label class="rating-option"><input type="radio" name="feedback" value="Great"> Great</label>
+                <label class="rating-option"><input type="radio" name="feedback" value="Good"> Good</label>
+                <label class="rating-option"><input type="radio" name="feedback" value="Average"> Average</label>
+                <label class="rating-option"><input type="radio" name="feedback" value="Poor"> Poor</label>
+              </div>
+            </div>
+
+            <div class="btn-group-action">
+              <button type="button" class="submit-btn" id="actionBtn" onclick="processPrintAndSubmit()">🖨️ Print PDF & Submit Request</button>
+            </div>
+          </form>
+        </td>
+      </tr>
+    </tbody>
+     <tfoot>
+   <tr>
+     <td>
+       <footer style="position: relative; padding-top: 8px; border-top: 4px solid #000; margin-top: 15px;">
+         
+         <!-- Base Banner Image (Fills Footer) -->
+         <img style="width: 100%; height: auto; display: block;" 
+              src="https://drive.google.com/thumbnail?id=1yJqN66I_esBhSXA7KM4NUemauIqV5k9v&sz=w1000"
+              alt="Footer Banner">
+              
+         <!-- Floating Metadata Box (Positioned in Front on the Right) -->
+         <div style="position: absolute; right: 85px; bottom: 8px; z-index: 10;">
+           <table style="border-collapse: collapse; font-size: 8px; font-family: Bookman Old Style, sans-serif; text-align: left; background: #ffffff; border: 1px solid #000; width: 190px;">
+             <tr>
+               <th style="border: 1px solid #000; padding: 1px 3px; font-weight: bold; width: 40%;">Doc. Ref. Code</th>
+               <td style="border: 1px solid #000; padding: 1px 3px;" colspan="3">RO-ORD-F230</td>
+               <th style="border: 1px solid #000; padding: 1px 3px; font-weight: bold;">Rev</th>
+               <td style="border: 1px solid #000; padding: 1px 3px; text-align: center;">00</td>
+             </tr>
+             <tr>
+               <th style="border: 1px solid #000; padding: 1px 3px; font-weight: bold;">Effectivity</th>
+               <td style="border: 1px solid #000; padding: 1px 3px;" colspan="3">09.01.2026</td>
+               <th style="border: 1px solid #000; padding: 1px 3px; font-weight: bold;">Page</th>
+               <td style="border: 1px solid #000; padding: 1px 3px; text-align: center;">1 of 2</td>
+             </tr>
+           </table>
+         </div>
+
+       </footer>
+     </td>
+   </tr>
+ </tfoot>
+  </table>
+</div>
+
+<script>
+  function getFormattedDate(now) {
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  function getFormattedTime(now) {
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    return `${hours}:${minutes}`;
+  }
+
+  function generateControlNo() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+
+    return `NW-${year}${month}${day}-${hours}${minutes}${seconds}`;
+  }
+
+  function setupSignaturePad(canvasId) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return null;
+
+    const ctx = canvas.getContext('2d');
+    let isDrawing = false;
+
+    canvas.width = canvas.offsetWidth || 300;
+    canvas.height = canvas.offsetHeight || 110;
+
+    ctx.strokeStyle = "#000000";
+    ctx.lineWidth = 2;
+
+    function getPos(e) {
+      const rect = canvas.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      return { x: clientX - rect.left, y: clientY - rect.top };
+    }
+
+    function startDrawing(e) { 
+      isDrawing = true; 
+      const pos = getPos(e); 
+      ctx.beginPath(); 
+      ctx.moveTo(pos.x, pos.y); 
+    }
+    
+    function draw(e) { 
+      if (!isDrawing) return; 
+      const pos = getPos(e); 
+      ctx.lineTo(pos.x, pos.y); 
+      ctx.stroke(); 
+    }
+    
+    function stopDrawing() { isDrawing = false; }
+    
+    function clear() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
+
+    canvas.addEventListener('mousedown', startDrawing);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', stopDrawing);
+    canvas.addEventListener('mouseleave', stopDrawing);
+
+    canvas.addEventListener('touchstart', startDrawing);
+    canvas.addEventListener('touchmove', draw);
+    canvas.addEventListener('touchend', stopDrawing);
+
+    return { canvas, clear };
+  }
+
+  let reqSig, assistedSig;
+
+  window.addEventListener('DOMContentLoaded', () => {
+    reqSig = setupSignaturePad('sigCanvas');
+    assistedSig = setupSignaturePad('assistedSigCanvas');
+
+    const reqNameInput = document.getElementById('reqName');
+    if (reqNameInput) {
+      reqNameInput.addEventListener('input', function () {
+        if (this.value.trim() !== '') {
+          if (!document.getElementById('reqDate').value) {
+            const now = new Date();
+            document.getElementById('reqDate').value = getFormattedDate(now);
+            document.getElementById('reqTime').value = getFormattedTime(now);
+          }
+        } else {
+          document.getElementById('reqDate').value = '';
+          document.getElementById('reqTime').value = '';
+        }
+      });
+    }
+
+    const feedbackRadios = document.querySelectorAll('input[name="feedback"]');
+    feedbackRadios.forEach(radio => {
+      radio.addEventListener('change', function () {
+        if (this.checked) {
+          const now = new Date();
+          document.getElementById('dateInspected').value = getFormattedDate(now);
+          document.getElementById('timeInspected').value = getFormattedTime(now);
+        }
+      });
+    });
+  });
+
+  function clearSignature() {
+    if (reqSig) reqSig.clear();
+  }
+
+  function clearAssistedSignature() {
+    if (assistedSig) assistedSig.clear();
+  }
+
+  async function processPrintAndSubmit() {
+    const form = document.getElementById('networkForm');
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    const actionBtn = document.getElementById('actionBtn');
+    actionBtn.disabled = true;
+    actionBtn.innerText = "Processing...";
+
+    let controlNoField = document.getElementById('controlNo');
+    if (!controlNoField.value || controlNoField.value === "Generating...") {
+      controlNoField.value = generateControlNo();
+    }
+
+    window.print();
+
+    actionBtn.innerText = "Submitting Data...";
+
+    const scriptURL = "https://script.google.com/macros/s/AKfycbzuJaNXDpdZdoJUgB_RoF7kKBDQA0CCBCsh9LQfsC2H67Vs5MpuQkAglDlSsSP9TZTOqQ/exec";
+
+    const payload = {
+      formType: "Network",
+      controlNo: controlNoField.value,
+      reqDate: document.getElementById('reqDate')?.value || '',
+      reqTime: document.getElementById('reqTime')?.value || '',
+      reqName: document.getElementById('reqName')?.value || '',
+      designation: document.getElementById('designation')?.value || '',
+      division: document.getElementById('division')?.value || '',
+      connectionType: document.querySelector('input[name="connectionType"]:checked')?.value || '',
+      uploadSpeed: document.getElementById('uploadSpeed')?.value || '',
+      downloadSpeed: document.getElementById('downloadSpeed')?.value || '',
+      disconnectionFreq: document.querySelector('input[name="disconnectionFreq"]:checked')?.value || '',
+      lastStableDate: document.getElementById('lastStableDate')?.value || '',
+      defects: document.getElementById('defects')?.value || '',
+      dateInspected: document.getElementById('dateInspected')?.value || '',
+      timeInspected: document.getElementById('timeInspected')?.value || '',
+      identifiedProblem: document.getElementById('identifiedProblem')?.value || '',
+      techSupportDesc: document.getElementById('techSupportDesc')?.value || '',
+      recommendations: document.getElementById('recommendations')?.value || '',
+      assistedBy: document.getElementById('assistedBy')?.value || '',
+      feedback: document.querySelector('input[name="feedback"]:checked')?.value || '',
+      signature: reqSig?.canvas ? reqSig.canvas.toDataURL() : '',
+      assistedBySignature: assistedSig?.canvas ? assistedSig.canvas.toDataURL() : ''
+    };
+
+    try {
+      await fetch(scriptURL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      alert("Network Request printed and submitted successfully!");
+      form.reset();
+      clearSignature();
+      clearAssistedSignature();
+      controlNoField.value = "";
+    } catch (error) {
+      console.error('Submission error:', error);
+      alert("Print completed, but data submission failed. Please try again.");
+    } finally {
+      actionBtn.disabled = false;
+      actionBtn.innerText = "🖨️ Print PDF & Submit Request";
+    }
+  }
+</script>
+
+</body>
+</html>

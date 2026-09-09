@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ICT Infrastructure Preventive Maintenance Service Form</title>
+  <style>
+    * { box-sizing: border-box; font-family: Bookman Old Style, sans-serif; }
+    body { background-color: #e2e8f0; margin: 0; padding: 20px; color: #1a202c; }
+
+    .paper-form {
+      max-width: 950px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 30px;
+      border: 1px solid #cbd5e0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    /* Print Master Outer Structure */
+    .print-outer-table {
+      width: 100%;
+      border-collapse: collapse;
+      border: none;
+    }
+    .print-outer-table > thead > tr > td,
+    .print-outer-table > tbody > tr > td,
+    .print-outer-table > tfoot > tr > td {
+      border: none;
+      padding: 0;
+    }
+
+    /* Document Header Table */
+    .doc-header-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 0px;
+    }
+    .doc-header-table td {
+      border: 1px solid #000;
+      padding: 6px 10px;
+      font-size: 11px;
+    }
+    .doc-title {
+      font-weight: bold;
+      font-size: 16px;
+      text-align: left;
+      text-transform: uppercase;
+      background-color: #f8fafc;
+    }
+
+    /* General Information Layout */
+    .info-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 15px;
+    }
+    .info-table td {
+      border: 1px solid black;
+      padding: 6px 8px;
+      font-size: 12px;
+      vertical-align: middle;
+    }
+    .info-label {
+      font-weight: bold;
+      background-color: white;
+      width: 15%;
+      color: #2d3748;
+    }
+    .info-input-cell { width: 35%; }
+    
+    input[type="text"], input[type="date"], select, textarea {
+      width: 100%;
+      padding: 5px 8px;
+      border: 1px solid #cbd5e0;
+      border-radius: 2px;
+      font-size: 12px;
+      outline: none;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: #2b6cb0;
+      box-shadow: 0 0 0 1px #2b6cb0;
+    }
+
+    /* Signature Area inside Header Grid */
+    canvas {
+      border: 1px dashed #a0aec0;
+      background: #fafafa;
+      cursor: crosshair;
+      touch-action: none;
+      width: 100%;
+      height: 45px;
+    }
+    .clear-btn {
+      background: #cbd5e0;
+      border: none;
+      padding: 2px 8px;
+      font-size: 10px;
+      cursor: pointer;
+      margin-top: 2px;
+      border-radius: 2px;
+    }
+    .clear-btn:hover { background: #a0aec0; }
+
+    /* Checklist Main Table */
+    .pm-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    .pm-table th, .pm-table td {
+      border: 1px solid black;
+      padding: 6px 8px;
+      font-size: 12px;
+      vertical-align: middle;
+    }
+    .pm-table th {
+      background-color: black;
+      color: white;
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+    }
+    .category-row {
+      background-color: #B4C6E7;
+      font-weight: bold;
+      color: black;
+    }
+    .num-col { text-align: center; width: 60px; font-weight: bold; }
+    .status-col { text-align: center; width: 80px; }
+    .remarks-col { width: 50px;}
+
+    /* Custom Radio Buttons */
+    .radio-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 11px;
+      cursor: pointer;
+    }
+
+    /* Footer Sign-off Section */
+    .signoff-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+      margin-bottom: 20px;
+    }
+    .signoff-table td {
+      border: 1px solid #cbd5e0;
+      padding: 10px;
+      font-size: 12px;
+      width: 50%;
+      vertical-align: top;
+    }
+    .personnel-name { font-weight: bold; margin-top: 15px; font-size: 13px; }
+    .personnel-title { font-size: 11px; color: #4a5568; }
+
+    /* Submit Button */
+    .submit-btn {
+      width: 100%;
+      background-color: #2b6cb0;
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .submit-btn:hover { background-color: #1a365d; }
+    .img-logo {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 12%;
+    }
+    .deped-header {
+      font-family: 'Old English Text MT', serif;
+      font-size: 20px;
+      text-align: center;
+      margin-top: 0; margin-bottom: 0.5px;
+    } 
+
+    .remarks {
+      height: 70px;
+    }
+
+    /* Print Engine Configuration */
+    @media print {
+      @page {
+        size: 8.5in 13in;
+        margin: 0.4in;
+      }
+
+      body {
+        background-color: #ffffff !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+
+      .paper-form {
+        box-shadow: none !important;
+        border: none !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+      }
+
+      thead {
+        display: table-header-group;
+      }
+
+      tfoot {
+        display: table-footer-group;
+      }
+
+      tr {
+        page-break-inside: avoid;
+      }
+
+      .submit-btn, .clear-btn {
+        display: none !important;
+      }
+
+      input[type="text"], select, textarea {
+        border: none !important;
+        background: transparent !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="paper-form">
+  <form id="pmsForm" onsubmit="handleFormSubmit(event)">
+    
+    <table class="print-outer-table">
+      <!-- HEADER REPEATED ON EVERY PRINTED PAGE -->
+      <thead>
+        <tr>
+          <td>
+            <img class="img-logo" src="https://drive.google.com/thumbnail?id=1K6y7gxZytn4Yaukpc7-hukRIrCtkHpSm&sz=w1000" alt="DepEd Logo">
+            <h2 class="deped-header">Republic of the Philippines</h2>
+            <h2 class="deped-header" style="font-size: 20px;">Department of Education</h2>
+            <h2 style="font-size: 15px; font-family: Bookman Old Style,serif;letter-spacing: 1.5px;text-align: center; margin-top: 0; margin-bottom: 10px; border-bottom: 4px solid">REGION X - NORTHERN MINDANAO</h2>
+          </td>
+        </tr>
+      </thead>
+
+      <!-- FOOTER REPEATED ON EVERY PRINTED PAGE -->
+       <tfoot>
+   <tr>
+     <td>
+       <footer style="position: relative; padding-top: 8px; border-top: 4px solid #000; margin-top: 15px;">
+         
+         <!-- Base Banner Image (Fills Footer) -->
+         <img style="width: 100%; height: auto; display: block;" 
+              src="https://drive.google.com/thumbnail?id=1yJqN66I_esBhSXA7KM4NUemauIqV5k9v&sz=w1000"
+              alt="Footer Banner">
+              
+         <!-- Floating Metadata Box (Positioned in Front on the Right) -->
+         <div style="position: absolute; right: 85px; bottom: 8px; z-index: 10;">
+           <table style="border-collapse: collapse; font-size: 8px; font-family: Bookman Old Style, sans-serif; text-align: left; background: #ffffff; border: 1px solid #000; width: 190px;">
+             <tr>
+               <th style="border: 1px solid #000; padding: 1px 3px; font-weight: bold; width: 40%;">Doc. Ref. Code</th>
+               <td style="border: 1px solid #000; padding: 1px 3px;" colspan="3">RO-ORD-F231</td>
+               <th style="border: 1px solid #000; padding: 1px 3px; font-weight: bold;">Rev</th>
+               <td style="border: 1px solid #000; padding: 1px 3px; text-align: center;">00</td>
+             </tr>
+             <tr>
+               <th style="border: 1px solid #000; padding: 1px 3px; font-weight: bold;">Effectivity</th>
+               <td style="border: 1px solid #000; padding: 1px 3px;" colspan="3">09.01.2026</td>
+               <th style="border: 1px solid #000; padding: 1px 3px; font-weight: bold;">Page</th>
+               <td style="border: 1px solid #000; padding: 1px 3px; text-align: center;">1 of _</td>
+             </tr>
+           </table>
+         </div>
+
+       </footer>
+     </td>
+   </tr>
+ </tfoot>
+
+      <!-- FORM CONTENT BODY -->
+      <tbody>
+        <tr>
+          <td>
+            <table class="doc-header-table">
+              <tr>
+                <td class="doc-title">Title: ICT Infrastructure Preventive Maintenance Service Form</td>
+              </tr>
+            </table>
+
+            <!-- General Information Grid -->
+            <table class="info-table">
+              <tr>
+                <td class="info-label">Equipment Type:</td>
+                <td class="info-input-cell"><input type="text" id="equipmentType" placeholder="e.g. Desktop, Laptop, Server" required></td>
+                <td class="info-label">Inspection Date:</td>
+                <td class="info-input-cell"><input type="date" id="inspectionDate" readonly required></td>
+              </tr>
+              <tr>
+                <td class="info-label">Name and Signature:</td>
+                <td class="info-input-cell">
+                  <canvas id="sigCanvas"></canvas>
+                  <input type="text" id="username" placeholder="Full Name" required>
+                  <button type="button" class="clear-btn" onclick="clearSignature()">Clear Signature</button>
+                </td>
+                <td class="info-label">Serial No.:</td>
+                <td class="info-input-cell"><input type="text" id="serialNo"></td>
+              </tr>
+              <tr>
+                <td class="info-label">Division / Office:</td>
+                <td class="info-input-cell"> <div>
+                  <select id="division" required>
+                    <option value="">-- Select Office / Unit --</option>
+                    <option value="Office of the Regional Director">Office of the Regional Director</option>
+                    <option value="Office of the Assistant Regional Director">Office of the Assistant Regional Director</option>
+                    <option value="Accounting Unit">Accounting Unit</option>
+                    <option value="Budget Section">Budget Section</option>
+                    <option value="PAU">PAU</option>
+                    <option value="ICTU">ICTU</option>
+                    <option value="ESSD">ESSD</option>
+                    <option value="Legal Unit">Legal Unit</option>
+                    <option value="FTAD">FTAD</option>
+                    <option value="COA">COA</option>
+                    <option value="Personnel Section">Personnel Section</option>
+                    <option value="QAD">Quality Assurance Division</option>
+                    <option value="CLMD">CLMD</option>
+                    <option value="PPRD">PPRD</option>
+                    <option value="ADMIN DIVISION">Administrative Division</option>
+                    <option value="Procurement Unit">Procurement Unit</option>
+                    <option value="General Services">General Services</option>
+                    <option value="Records Section">Records Section</option>
+                    <option value="Asset Supply Management">Asset Supply Management</option>
+                    <option value="Cashier Section">Cash Section</option>
+                    <option value="LR">LR</option>
+                    <option value="HRDD">HRDD</option>
+                    <option value="HNU">Health and Nutrition Unit</option>
+                  </select>
+                </div></td>
+                <td class="info-label">Property No.:</td>
+                <td class="info-input-cell"><input type="text" id="propertyNo"></td>
+              </tr>
+            </table>
+
+            <!-- Task Checklist Table -->
+            <table class="pm-table">
+              <thead>
+                <tr>
+                  <th style="width: 60px;">Item #</th>
+                  <th>Task Description</th>
+                  <th style="width: 70px;">OK</th>
+                  <th style="width: 100px;">Needs Repair</th>
+                  <th style="width: 180px;">Remarks</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- 1. System Startup & Login -->
+                <tr class="category-row">
+                  <td class="num-col">1.</td>
+                  <td colspan="4">System Startup & Login</td>
+                </tr>
+                <tr>
+                  <td class="num-col">1.1</td>
+                  <td>Cold boot completes without errors or unusual delays</td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_1_1" value="OK" required> OK</label></td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_1_1" value="NEEDS REPAIR"> Repair</label></td>
+                  <td class="remarks-col"><textarea class="remarks" name="remarks_1_1"></textarea></td>
+                </tr>
+                <tr>
+                  <td class="num-col">1.2</td>
+                  <td>POST/diagnostic messages reviewed and resolved</td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_1_2" value="OK" required> OK</label></td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_1_2" value="NEEDS REPAIR"> Repair</label></td>
+                  <td class="remarks-col"><textarea class="remarks" name="remarks_1_2"></textarea></td>
+                </tr>
+                <tr>
+                  <td class="num-col">1.3</td>
+                  <td>Operating system loads successfully</td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_1_3" value="OK" required> OK</label></td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_1_3" value="NEEDS REPAIR"> Repair</label></td>
+                  <td class="remarks-col"><textarea class="remarks" name="remarks_1_3"></textarea></td>
+                </tr>
+                <tr>
+                  <td class="num-col">1.4</td>
+                  <td>User log-in is successful</td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_1_4" value="OK" required> OK</label></td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_1_4" value="NEEDS REPAIR"> Repair</label></td>
+                  <td class="remarks-col"><textarea class="remarks" name="remarks_1_4"></textarea></td>
+                </tr>
+                <tr>
+                  <td class="num-col">1.5</td>
+                  <td>Login scripts, mapped drives, and startup applications function properly</td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_1_5" value="OK" required> OK</label></td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_1_5" value="NEEDS REPAIR"> Repair</label></td>
+                  <td class="remarks-col"><textarea class="remarks" name="remarks_1_5"></textarea></td>
+                </tr>
+
+                <!-- 2. Network & Security Configuration -->
+                <tr class="category-row">
+                  <td class="num-col">2.</td>
+                  <td colspan="4">Network & Security Configuration</td>
+                </tr>
+                <tr>
+                  <td class="num-col">2.1</td>
+                  <td>IP address and subnet mask are correct</td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_2_1" value="OK" required> OK</label></td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_2_1" value="NEEDS REPAIR"> Repair</label></td>
+                  <td class="remarks-col"><textarea class="remarks" name="remarks_2_1"></textarea></td>
+                </tr>
+                <tr>
+                  <td class="num-col">2.2</td>
+                  <td>Computer name and domain/workgroup membership are correct</td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_2_2" value="OK" required> OK</label></td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_2_2" value="NEEDS REPAIR"> Repair</label></td>
+                  <td class="remarks-col"><textarea class="remarks" name="remarks_2_2"></textarea></td>
+                </tr>
+                <tr>
+                  <td class="num-col">2.3</td>
+                  <td>Security policies and client configurations are applied</td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_2_3" value="OK" required> OK</label></td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_2_3" value="NEEDS REPAIR"> Repair</label></td>
+                  <td class="remarks-col"><textarea class="remarks" name="remarks_2_3"></textarea></td>
+                </tr>
+                <tr>
+                  <td class="num-col">2.4</td>
+                  <td>Network connectivity and Internet access are verified</td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_2_4" value="OK" required> OK</label></td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_2_4" value="NEEDS REPAIR"> Repair</label></td>
+                  <td class="remarks-col"><textarea class="remarks" name="remarks_2_4"></textarea></td>
+                </tr>
+
+                <!-- 3. Hardware Inspection -->
+                <tr class="category-row">
+                  <td class="num-col">3.</td>
+                  <td colspan="4">Hardware Inspection</td>
+                </tr>
+                <tr>
+                  <td class="num-col">3.1</td>
+                  <td>Device Manager shows no hardware errors</td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_3_1" value="OK" required> OK</label></td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_3_1" value="NEEDS REPAIR"> Repair</label></td>
+                  <td class="remarks-col"><textarea class="remarks" name="remarks_3_1"></textarea></td>
+                </tr>
+                <tr>
+                  <td class="num-col">3.2</td>
+                  <td>BIOS/firmware versions are current</td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_3_2" value="OK" required> OK</label></td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_3_2" value="NEEDS REPAIR"> Repair</label></td>
+                  <td class="remarks-col"><textarea class="remarks" name="remarks_3_2"></textarea></td>
+                </tr>
+                <tr>
+                  <td class="num-col">3.3</td>
+                  <td>Storage devices pass health checks</td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_3_3" value="OK" required> OK</label></td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_3_3" value="NEEDS REPAIR"> Repair</label></td>
+                  <td class="remarks-col"><textarea class="remarks" name="remarks_3_3"></textarea></td>
+                </tr>
+                <tr>
+                  <td class="num-col">3.4</td>
+                  <td>Memory passes diagnostic tests</td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_3_4" value="OK" required> OK</label></td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_3_4" value="NEEDS REPAIR"> Repair</label></td>
+                  <td class="remarks-col"><textarea class="remarks" name="remarks_3_4"></textarea></td>
+                </tr>
+                <tr>
+                  <td class="num-col">3.5</td>
+                  <td>Laptop battery condition is acceptable (if applicable)</td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_3_5" value="OK" required> OK</label></td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_3_5" value="NEEDS REPAIR"> Repair</label></td>
+                  <td class="remarks-col"><textarea class="remarks" name="remarks_3_5"></textarea></td>
+                </tr>
+                <tr>
+                  <td class="num-col">3.6</td>
+                  <td>Power adapter, battery, and cables inspected for wear or damage</td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_3_6" value="OK" required> OK</label></td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_3_6" value="NEEDS REPAIR"> Repair</label></td>
+                  <td class="remarks-col"><textarea class="remarks" name="remarks_3_6"></textarea></td>
+                </tr>
+                <tr>
+                  <td class="num-col">3.7</td>
+                  <td>System temperatures and SMART/health logs reviewed for signs of overheating or impending failure</td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_3_7" value="OK" required> OK</label></td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_3_7" value="NEEDS REPAIR"> Repair</label></td>
+                  <td class="remarks-col"><textarea class="remarks" name="remarks_3_7"></textarea></td>
+                </tr>
+
+                <!-- 4. Software & Security Tools -->
+                <tr class="category-row">
+                  <td class="num-col">4.</td>
+                  <td colspan="4">Software & Security Tools</td>
+                </tr>
+                <tr>
+                  <td class="num-col">4.1</td>
+                  <td>Required applications are installed and updated</td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_4_1" value="OK" required> OK</label></td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_4_1" value="NEEDS REPAIR"> Repair</label></td>
+                  <td class="remarks-col"><textarea class="remarks" name="remarks_4_1"></textarea></td>
+                </tr>
+                <tr>
+                  <td class="num-col">4.2</td>
+                  <td>Antivirus definitions are current</td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_4_2" value="OK" required> OK</label></td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_4_2" value="NEEDS REPAIR"> Repair</label></td>
+                  <td class="remarks-col"><textarea class="remarks" name="remarks_4_2"></textarea></td>
+                </tr>
+                <tr>
+                  <td class="num-col">4.3</td>
+                  <td>Full malware scan completed successfully</td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_4_3" value="OK" required> OK</label></td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_4_3" value="NEEDS REPAIR"> Repair</label></td>
+                  <td class="remarks-col"><textarea class="remarks" name="remarks_4_3"></textarea></td>
+                </tr>
+                <tr>
+                  <td class="num-col">4.4</td>
+                  <td>Wazuh agent installed and active</td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_4_4" value="OK" required> OK</label></td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_4_4" value="NEEDS REPAIR"> Repair</label></td>
+                  <td class="remarks-col"><textarea class="remarks" name="remarks_4_4"></textarea></td>
+                </tr>
+                <tr>
+                  <td class="num-col">4.5</td>
+                  <td>Wazuh agent reports successfully to the server</td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_4_5" value="OK" required> OK</label></td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_4_5" value="NEEDS REPAIR"> Repair</label></td>
+                  <td class="remarks-col"><textarea class="remarks" name="remarks_4_5"></textarea></td>
+                </tr>
+                <tr>
+                  <td class="num-col">4.6</td>
+                  <td>AnyDesk installed and configured according to policy (if authorized)</td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_4_6" value="OK" required> OK</label></td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_4_6" value="NEEDS REPAIR"> Repair</label></td>
+                  <td class="remarks-col"><textarea class="remarks" name="remarks_4_6"></textarea></td>
+                </tr>
+                <tr>
+                  <td class="num-col">4.7</td>
+                  <td>Remote connection test completed successfully</td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_4_7" value="OK" required> OK</label></td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_4_7" value="NEEDS REPAIR"> Repair</label></td>
+                  <td class="remarks-col"><textarea class="remarks" name="remarks_4_7"></textarea></td>
+                </tr>
+                <tr>
+                  <td class="num-col">4.8</td>
+                  <td>Local administrator password changed/rotated in accordance with policy</td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_4_8" value="OK" required> OK</label></td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_4_8" value="NEEDS REPAIR"> Repair</label></td>
+                  <td class="remarks-col"><textarea class="remarks" name="remarks_4_8"></textarea></td>
+                </tr>
+                <tr>
+                  <td class="num-col">4.9</td>
+                  <td>User accounts reviewed; unauthorized or inactive accounts removed or disabled</td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_4_9" value="OK" required> OK</label></td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_4_9" value="NEEDS REPAIR"> Repair</label></td>
+                  <td class="remarks-col"><textarea class="remarks" name="remarks_4_9"></textarea></td>
+                </tr>
+                <tr>
+                  <td class="num-col">4.10</td>
+                  <td>Backup status verified and a test restore performed according to schedule</td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_4_10" value="OK" required> OK</label></td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_4_10" value="NEEDS REPAIR"> Repair</label></td>
+                  <td class="remarks-col"><textarea class="remarks" name="remarks_4_10"></textarea></td>
+                </tr>
+                <tr>
+                  <td class="num-col">4.11</td>
+                  <td>Recovery partition or recovery media is present and up to date</td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_4_11" value="OK" required> OK</label></td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_4_11" value="NEEDS REPAIR"> Repair</label></td>
+                  <td class="remarks-col"><textarea class="remarks" name="remarks_4_11"></textarea></td>
+                </tr>
+                <tr>
+                  <td class="num-col">4.12</td>
+                  <td>Installed browser extensions and software reviewed for unauthorized additions</td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_4_12" value="OK" required> OK</label></td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_4_12" value="NEEDS REPAIR"> Repair</label></td>
+                  <td class="remarks-col"><textarea class="remarks" name="remarks_4_12"></textarea></td>
+                </tr>
+                <tr>
+                  <td class="num-col">4.13</td>
+                  <td>An approved local administrator account exists on the device and is configured per policy</td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_4_13" value="OK" required> OK</label></td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_4_13" value="NEEDS REPAIR"> Repair</label></td>
+                  <td class="remarks-col"><textarea class="remarks" name="remarks_4_13"></textarea></td>
+                </tr>
+
+                <!-- 5. Housekeeping & Cleaning -->
+                <tr class="category-row">
+                  <td class="num-col">5.</td>
+                  <td colspan="4">Housekeeping & Cleaning</td>
+                </tr>
+                <tr>
+                  <td class="num-col">5.1</td>
+                  <td>Unused software removed</td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_5_1" value="OK" required> OK</label></td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_5_1" value="NEEDS REPAIR"> Repair</label></td>
+                  <td class="remarks-col"><textarea class="remarks" name="remarks_5_1"></textarea></td>
+                </tr>
+                <tr>
+                  <td class="num-col">5.2</td>
+                  <td>Temporary files, caches, and Recycle Bin cleared</td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_5_2" value="OK" required> OK</label></td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_5_2" value="NEEDS REPAIR"> Repair</label></td>
+                  <td class="remarks-col"><textarea class="remarks" name="remarks_5_2"></textarea></td>
+                </tr>
+                <tr>
+                  <td class="num-col">5.3</td>
+                  <td>Dust removed from equipment</td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_5_3" value="OK" required> OK</label></td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_5_3" value="NEEDS REPAIR"> Repair</label></td>
+                  <td class="remarks-col"><textarea class="remarks" name="remarks_5_3"></textarea></td>
+                </tr>
+                <tr>
+                  <td class="num-col">5.4</td>
+                  <td>Cables and internal components are secure</td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_5_4" value="OK" required> OK</label></td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_5_4" value="NEEDS REPAIR"> Repair</label></td>
+                  <td class="remarks-col"><textarea class="remarks" name="remarks_5_4"></textarea></td>
+                </tr>
+                <tr>
+                  <td class="num-col">5.5</td>
+                  <td>Cooling fans and airflow are normal</td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_5_5" value="OK" required> OK</label></td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_5_5" value="NEEDS REPAIR"> Repair</label></td>
+                  <td class="remarks-col"><textarea class="remarks" name="remarks_5_5"></textarea></td>
+                </tr>
+
+                <!-- 6. Peripherals Management -->
+                <tr class="category-row">
+                  <td class="num-col">6.</td>
+                  <td colspan="4">Peripherals Management</td>
+                </tr>
+                <tr>
+                  <td class="num-col">6.1</td>
+                  <td>Keyboard and mouse function properly</td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_6_1" value="OK" required> OK</label></td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_6_1" value="NEEDS REPAIR"> Repair</label></td>
+                  <td class="remarks-col"><textarea class="remarks" name="remarks_6_1"></textarea></td>
+                </tr>
+                <tr>
+                  <td class="num-col">6.2</td>
+                  <td>Monitor/display operates normally</td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_6_2" value="OK" required> OK</label></td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_6_2" value="NEEDS REPAIR"> Repair</label></td>
+                  <td class="remarks-col"><textarea class="remarks" name="remarks_6_2"></textarea></td>
+                </tr>
+                <tr>
+                  <td class="num-col">6.3</td>
+                  <td>UPS function properly</td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_6_3" value="OK" required> OK</label></td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_6_3" value="NEEDS REPAIR"> Repair</label></td>
+                  <td class="remarks-col"><textarea class="remarks" name="remarks_6_3"></textarea></td>
+                </tr>
+                <tr>
+                  <td class="num-col">6.4</td>
+                  <td>Other connected devices are operational</td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_6_4" value="OK" required> OK</label></td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_6_4" value="NEEDS REPAIR"> Repair</label></td>
+                  <td class="remarks-col"><textarea class="remarks" name="remarks_6_4"></textarea></td>
+                </tr>
+                <tr>
+                  <td class="num-col">6.5</td>
+                  <td>Printer successfully prints both color and black-and-white test pages</td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_6_5" value="OK" required> OK</label></td>
+                  <td class="status-col"><label class="radio-label"><input type="radio" name="item_6_5" value="NEEDS REPAIR"> Repair</label></td>
+                  <td class="remarks-col"><textarea class="remarks" name="remarks_6_5"></textarea></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <!-- Sign-off Section -->
+            <table class="signoff-table">
+              <tr>
+                <td colspan="2">
+                  <b>Recommendation/s</b>
+                  <textarea id="recommendations"></textarea>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <b>Assisted By:</b>
+                  <div class="personnel-name">LOURD MAT FRANCIS B. DY</div>
+                  <div class="personnel-title">JOB ORDER – ICT UNIT</div>
+                </td>
+                <td>
+                  <b>Inspected By:</b>
+                  <div class="personnel-name">CLAUDINE RAE G. YAMIS</div>
+                  <div class="personnel-title">Computer Maintenance Technologist - I</div>
+                </td>
+              </tr>
+            </table>
+
+            <button type="submit" class="submit-btn" id="submitBtn">Submit Preventive Maintenance Entry</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  </form>
+</div>
+
+<script>
+  // Automatic Inspection Date population when Name is entered
+  function getFormattedDate(now) {
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const usernameInput = document.getElementById('username');
+    if (usernameInput) {
+      usernameInput.addEventListener('input', function () {
+        const inspectionDateInput = document.getElementById('inspectionDate');
+        if (this.value.trim() !== '') {
+          if (!inspectionDateInput.value) {
+            inspectionDateInput.value = getFormattedDate(new Date());
+          }
+        } else {
+          inspectionDateInput.value = '';
+        }
+      });
+    }
+  });
+
+  // Signature Canvas Handling
+  const canvas = document.getElementById('sigCanvas');
+  const ctx = canvas.getContext('2d');
+  let isDrawing = false;
+
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+  ctx.strokeStyle = "#000000";
+  ctx.lineWidth = 2;
+
+  function getPos(e) {
+    const rect = canvas.getBoundingClientRect();
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    return { x: clientX - rect.left, y: clientY - rect.top };
+  }
+
+  function startDrawing(e) { isDrawing = true; const pos = getPos(e); ctx.beginPath(); ctx.moveTo(pos.x, pos.y); }
+  function draw(e) { if (!isDrawing) return; const pos = getPos(e); ctx.lineTo(pos.x, pos.y); ctx.stroke(); }
+  function stopDrawing() { isDrawing = false; }
+  function clearSignature() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
+
+  canvas.addEventListener('mousedown', startDrawing);
+  canvas.addEventListener('mousemove', draw);
+  canvas.addEventListener('mouseup', stopDrawing);
+  canvas.addEventListener('mouseleave', stopDrawing);
+  canvas.addEventListener('touchstart', startDrawing);
+  canvas.addEventListener('touchmove', draw);
+  canvas.addEventListener('touchend', stopDrawing);
+
+  function handleFormSubmit(e) {
+    e.preventDefault();
+    const submitBtn = document.getElementById('submitBtn');
+    submitBtn.innerText = "Submitting...";
+    submitBtn.disabled = true;
+
+    const items = [
+      "1_1", "1_2", "1_3", "1_4", "1_5",
+      "2_1", "2_2", "2_3", "2_4",
+      "3_1", "3_2", "3_3", "3_4", "3_5", "3_6", "3_7",
+      "4_1", "4_2", "4_3", "4_4", "4_5", "4_6", "4_7", "4_8", "4_9", "4_10", "4_11", "4_12", "4_13",
+      "5_1", "5_2", "5_3", "5_4", "5_5",
+      "6_1", "6_2", "6_3", "6_4", "6_5"
+    ];
+
+    let checklistResults = {};
+    items.forEach(code => {
+      const status = document.querySelector(`input[name="item_${code}"]:checked`)?.value || '';
+      const remark = document.querySelector(`textarea[name="remarks_${code}"]`)?.value || '';
+      checklistResults[`item_${code}`] = status;
+      checklistResults[`remarks_${code}`] = remark;
+    });
+
+    const formData = {
+      formType: "Preventive Maintenance Service",
+      equipmentType: document.getElementById('equipmentType')?.value || '',
+      dateInspected: document.getElementById('inspectionDate')?.value || '',
+      username: document.getElementById('username')?.value || '',
+      division: document.getElementById('division')?.value || '',
+      serialNo: document.getElementById('serialNo')?.value || '',
+      propertyNo: document.getElementById('propertyNo')?.value || '',
+      recommendations: document.getElementById('recommendations')?.value || '',
+      techSupportDesc: "CLAUDINE RAE G. YAMIS (Computer Maintenance Technologist - I)",
+      assistedBy: "LOURD MAT FRANCIS B. DY",
+      signature: canvas.toDataURL(),
+      checklist: checklistResults
+    };
+
+    const scriptURL = "https://script.google.com/macros/s/AKfycbIxlYIetDQmxqEcovNKfzxyIrFMSI1H5dIOtQd0YRorROa6KT9eFry8DuBiTAj6aqUlQ/exec";
+
+    fetch(scriptURL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData)
+    })
+    .then(() => {
+      alert("Preventive Maintenance Form submitted successfully!");
+      document.getElementById('pmsForm').reset();
+      clearSignature();
+      submitBtn.innerText = "Submit Preventive Maintenance Entry";
+      submitBtn.disabled = false;
+    })
+    .catch(error => {
+      console.error('Error!', error.message);
+      alert("Submission failed. Please check network connection.");
+      submitBtn.innerText = "Submit Preventive Maintenance Entry";
+      submitBtn.disabled = false;
+    });
+  }
+</script>
+
+</body>
+</html>
